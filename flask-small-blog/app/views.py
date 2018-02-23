@@ -1,12 +1,16 @@
-from flask import Flask,render_template,redirect,flash
-from forms import LoginForm
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+"""
+# @Author  : xuan
 
-app = Flask(__name__)
-app.config.from_object('config')
+"""
+from flask import render_template,flash,redirect
+from app import app
+from app.forms import LoginForm
 
 
 @app.route('/')
-@app.route("/index")
+@app.route('/index')
 def index():
     user = {'nickname':'tony'}
     posts = [
@@ -21,8 +25,6 @@ def index():
     ]
     return render_template("index.html", title='home', user=user, posts =posts)
 
-
-
 @app.route('/login', methods =['GET','POST'])
 def login():
     form = LoginForm()
@@ -31,7 +33,3 @@ def login():
         return redirect('/index')
     return render_template('login.html',title='Sign In',form =form,\
                            providers=app.config['OPENID_PROVIDERS'])
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
